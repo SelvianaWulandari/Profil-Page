@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/gestures.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,7 +30,17 @@ class MyWidget extends StatelessWidget {
   final String profileTitle = 'Informatics Engineering Student';
   final String profileNIM = "220211060044";
   final String profileDescription =
-      "Elek-Elik 22 ⚡\n\nMahasiswa Semester 2\nJurusan Elektro\nProgram Studi Informatika\nUniversitas Sam Ratulangi\n\n#VIVAELEKTRO ❤️‍🩹";
+      "Elek-Elik 22 ⚡\n\nMahasiswa di Jurusan Elektro\nProgram Studi Informatika\nUniversitas Sam Ratulangi";
+  final String linkedInProfile =
+      "https://www.linkedin.com/in/selviana-wulandari/";
+
+  _launchURL() async {
+    if (await canLaunch(linkedInProfile)) {
+      await launch(linkedInProfile);
+    } else {
+      throw 'Could not launch $linkedInProfile';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +85,6 @@ class MyWidget extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 8),
-              Text(
-                profileNIM,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
-              ),
               SizedBox(height: 16),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 32),
@@ -92,6 +96,29 @@ class MyWidget extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
+              ),
+              SizedBox(height: 8),
+              RichText(
+                text: TextSpan(
+                  text: '\nLinkedIn: ',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: '\nhttps://www.linkedin.com/in/selviana-wulandari/',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()..onTap = _launchURL,
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
               ),
             ],
           ),
