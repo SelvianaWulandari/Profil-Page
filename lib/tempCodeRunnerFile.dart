@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/gestures.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,12 +25,26 @@ class MyApp extends StatelessWidget {
 
 class MyWidget extends StatelessWidget {
   final String profilePictureURL =
-      "https://pbs.twimg.com/profile_images/1664974113306464256/7u3axgeM_400x400.jpg";
+      "https://pbs.twimg.com/media/Fznp6JRX0AAWCyN?format=jpg&name=900x900";
   final String profileName = 'Selviana Wulandari';
   final String profileTitle = 'Informatics Engineering Student';
   final String profileNIM = "220211060044";
   final String profileDescription =
-      "Elek-Elik 22 ⚡\n\nMahasiswa Semester 2\nJurusan Elektro\nProgram Studi Informatika\nUniversitas Sam Ratulangi\n\n#VIVAELEKTRO ❤️‍🩹";
+      "Mahasiswa di Jurusan Elektro\nProgram Studi Informatika\nUniversitas Sam Ratulangi\n\n Menuju tak terbatas dan melampauinya🚀";
+  final String linkedInProfile =
+      "https://www.linkedin.com/in/selviana-wulandari/";
+  final String instagramProfile =
+      "https://www.instagram.com/selviiiiiiiiiiii_/";
+  final String backgroundImageURL =
+      "https://pbs.twimg.com/media/FznLcskXgAAVTHX?format=jpg&name=medium";
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +58,9 @@ class MyWidget extends StatelessWidget {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.black, Colors.white],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+          image: DecorationImage(
+            image: NetworkImage(backgroundImageURL),
+            fit: BoxFit.cover,
           ),
         ),
         child: Center(
@@ -62,7 +77,7 @@ class MyWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 97, 141, 150),
                 ),
               ),
               SizedBox(height: 8),
@@ -70,7 +85,7 @@ class MyWidget extends StatelessWidget {
                 profileTitle,
                 style: TextStyle(
                   fontSize: 19,
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 97, 141, 150),
                 ),
               ),
               SizedBox(height: 8),
@@ -78,7 +93,7 @@ class MyWidget extends StatelessWidget {
                 profileNIM,
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 97, 141, 150),
                 ),
               ),
               SizedBox(height: 16),
@@ -89,9 +104,57 @@ class MyWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: Color.fromARGB(255, 97, 141, 150),
                   ),
                 ),
+              ),
+              SizedBox(height: 8),
+              RichText(
+                text: TextSpan(
+                  text: '\nLinkedIn: ',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 97, 141, 150),
+                  ),
+                  children: [
+                    TextSpan(
+                      text: linkedInProfile,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color.fromARGB(255, 40, 88, 125),
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => _launchURL(linkedInProfile),
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 8),
+              RichText(
+                text: TextSpan(
+                  text: 'Instagram: ',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 97, 141, 150),
+                  ),
+                  children: [
+                    TextSpan(
+                      text: instagramProfile,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color.fromARGB(255, 40, 88, 125),
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => _launchURL(instagramProfile),
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
               ),
             ],
           ),
